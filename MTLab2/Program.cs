@@ -1,5 +1,8 @@
 ﻿using MTLab2;
 
+object lockObj = new();
+var completedThreads = 0;
+
 const int size = 100_000_000_0;
 const int maxValue = 15000;
 const int threadCount = 5;
@@ -31,6 +34,15 @@ for (var t = 0; t < threadCount; t++)
 		}
 
 		results[threadIndex] = new MinResult { Value = localMin, Index = localMinIndex };
+		
+		lock (lockObj)
+		{
+			completedThreads++;
+			if (completedThreads == threadCount)
+			{
+				Monitor.Pulse(lockObj);
+			}
+		}
 	});
 
 	threads[t].Start();
