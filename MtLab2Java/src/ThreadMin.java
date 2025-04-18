@@ -23,5 +23,6 @@ public class ThreadMin extends Thread {
         }
 
         arrClass.updateMin(localMin, localIndex);
+        arrClass.notifyThreadCompleted();
     }
 }

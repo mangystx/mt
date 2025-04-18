@@ -20,6 +20,8 @@ public class ArrClass {
     private int minValue = Integer.MAX_VALUE;
     private int minIndex = -1;
 
+    private int completedThreads = 0;
+
     public synchronized void updateMin(int value, int index) {
         if (value < minValue) {
             minValue = value;
@@ -40,12 +42,21 @@ public class ArrClass {
             start = end;
         }
 
-        for (ThreadMin thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        synchronized (this) {
+            while (completedThreads < threadNum) {
+                try {
+                    wait(); // аналог Monitor.Wait()
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+        }
+    }
+
+    public synchronized void notifyThreadCompleted() {
+        completedThreads++;
+        if (completedThreads == threadNum) {
+            notify();
         }
     }
 
