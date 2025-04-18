@@ -48,8 +48,13 @@ for (var t = 0; t < threadCount; t++)
 	threads[t].Start();
 }
 
-foreach (var thread in threads)
-	thread.Join();
+lock (lockObj)
+{
+	while (completedThreads < threadCount)
+	{
+		Monitor.Wait(lockObj);
+	}
+}
 
 var globalMin = int.MaxValue;
 var globalIndex = -1;
