@@ -10,9 +10,10 @@ class Consumer {
     public void run() {
         try {
             for (int i = 0; i < count; i++) {
-                String item = manager.consume();
-                System.out.println(Thread.currentThread().getName() + " consumed: " + item);
+                manager.consume();
+                Thread.sleep(150);
             }
+            System.out.printf("[Споживач %s] завершив роботу.\n", Thread.currentThread().getName().split("-")[1]);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }

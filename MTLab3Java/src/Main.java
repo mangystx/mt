@@ -1,5 +1,3 @@
-import java.util.*;
-import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
@@ -31,7 +29,6 @@ public class Main {
             t.start();
         }
 
-        // Ожидаем завершения всех потоков
         while (finishedThreads.get() < totalThreads) {
             try {
                 Thread.sleep(100); // опрашиваем каждые 100мс

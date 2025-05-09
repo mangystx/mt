@@ -17,7 +17,8 @@ class Manager {
         full.acquire();
         access.acquire();
         buffer.add(item);
-        System.out.println(Thread.currentThread().getName() + " produced: " + item);
+        System.out.printf("[Виробник %s] додав %s. Буфер: %d\n",
+                Thread.currentThread().getName().split("-")[1], item, buffer.size());
         access.release();
         empty.release();
     }
@@ -26,7 +27,9 @@ class Manager {
         empty.acquire();
         access.acquire();
         String item = buffer.poll();
-        System.out.println(Thread.currentThread().getName() + " consumed: " + item);
+        System.out.printf("[Споживач %s] забрав %s. Буфер: %d\n",
+                Thread.currentThread().getName().split("-")[1], item, buffer.size()
+        );
         access.release();
         full.release();
         return item;
