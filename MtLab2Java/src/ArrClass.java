@@ -45,7 +45,7 @@ public class ArrClass {
         synchronized (this) {
             while (completedThreads < threadNum) {
                 try {
-                    wait(); // аналог Monitor.Wait()
+                    wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
